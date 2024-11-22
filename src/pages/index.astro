@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Feature from '../components/Feature.astro';
+import Testimonial from '../components/Testimonial.astro';
+import PriceCard from '../components/PriceCard.astro';
+import Chatbot from '../components/Chatbot.astro';
+---
+
+<Layout title="副業で稼ぐ！ebay×国内マーケット転売講座">
+  <main>
+    <!-- ヒーローセクション -->
+    <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+      <div class="container mx-auto px-4 py-24">
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="text-5xl font-bold mb-6">誰でも始められる<br>海外転売ビジネス</h1>
+          <p class="text-xl mb-4">ebayから仕入れて、ヤフオク・メルカリで販売</p>
+          <p class="text-2xl font-bold mb-8">初心者でも月5万円から始められる！</p>
+          <a href="#contact" class="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition-colors">
+            無料説明会に参加する
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特徴セクション -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">なぜ今、海外転売なのか？</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <Feature 
+            title="為替差益で利益UP"
+            description="円安を活かした仕入れで、他の転売に比べて高い利益率を実現できます"
+            icon="💹"
+          />
+          <Feature
+            title="在宅で完結"
+            description="仕入れから販売まで、すべてをパソコン1台で完結。時間や場所を選びません"
+            icon="💻"
+          />
+          <Feature
+            title="リスク最小限"
+            description="少額から始められ、売れる商品を見極めてから仕入れるので在庫リスクも最小限"
+            icon="🔒"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 実績セクション -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">受講生の実績</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <Testimonial
+            name="鈴木さん（34歳）"
+            role="会社員"
+            comment="副業未経験でしたが、3ヶ月目で月5万円の利益を達成できました。空き時間を使って少しずつ始められたのが良かったです。"
+            monthlyProfit="5-8万円"
+          />
+          <Testimonial
+            name="佐藤さん（28歳）"
+            role="主婦"
+            comment="子育ての合間にできる副業を探していました。1日2時間の作業で月10万円の収入があります。"
+            monthlyProfit="8-12万円"
+          />
+          <Testimonial
+            name="田中さん（42歳）"
+            role="自営業"
+            comment="本業の傍ら始めましたが、今では本業以上の収入に。特に円安の今がチャンスだと実感しています。"
+            monthlyProfit="15-20万円"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 料金プラン -->
+    <section class="py-20 bg-gray-50" id="price">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">料金プラン</h2>
+        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+          <PriceCard
+            title="スタンダードプラン"
+            price="98,000円"
+            features={[
+              "基礎講座（動画教材）",
+              "商品リサーチ手法",
+              "ebay仕入れマニュアル",
+              "国内販売ガイド",
+              "3ヶ月間のメールサポート"
+            ]}
+          />
+          <PriceCard
+            title="プレミアムプラン"
+            price="198,000円"
+            features={[
+              "スタンダードプランの全特典",
+              "マンツーマンコンサル（3回）",
+              "利益商品リスト（毎月更新）",
+              "専用コミュニティ参加権",
+              "永久メールサポート",
+              "開始資金調達アドバイス"
+            ]}
+            isPopular={true}
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- お問い合わせ -->
+    <section class="py-20" id="contact">
+      <div class="container mx-auto px-4 max-w-2xl">
+        <h2 class="text-3xl font-bold text-center mb-12">無料説明会に参加する</h2>
+        <form class="space-y-6">
+          <div>
+            <label class="block text-gray-700 mb-2" for="name">お名前</label>
+            <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2" for="email">メールアドレス</label>
+            <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2" for="phone">電話番号</label>
+            <input type="tel" id="phone" class="w-full px-4 py-2 border rounded-lg" required>
+          </div>
+          <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors">
+            無料説明会に申し込む
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <Chatbot />
+</Layout>

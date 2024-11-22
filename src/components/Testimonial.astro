@@ -1,0 +1,19 @@
+---
+interface Props {
+  name: string;
+  role: string;
+  comment: string;
+  monthlyProfit: string;
+}
+
+const { name, role, comment, monthlyProfit } = Astro.props;
+---
+
+<div class="bg-white p-6 rounded-lg shadow-lg">
+  <div class="mb-4">
+    <p class="text-gray-600 mb-4">{comment}</p>
+    <div class="font-bold text-lg mb-1">{name}</div>
+    <div class="text-gray-500 text-sm mb-2">{role}</div>
+    <div class="text-blue-600 font-bold">月収: {monthlyProfit}</div>
+  </div>
+</div>

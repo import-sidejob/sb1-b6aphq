@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  price: string;
+  features: string[];
+  isPopular?: boolean;
+}
+
+const { title, price, features, isPopular = false } = Astro.props;
+---
+
+<div class={`bg-white p-8 rounded-lg shadow-lg ${isPopular ? 'border-2 border-blue-600' : ''}`}>
+  {isPopular && <div class="inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm mb-4">人気プラン</div>}
+  <h3 class="text-xl font-bold mb-4">{title}</h3>
+  <p class="text-3xl font-bold mb-4">{price}<span class="text-base font-normal">/一括</span></p>
+  <ul class="space-y-3 mb-8">
+    {features.map(feature => (
+      <li>✓ {feature}</li>
+    ))}
+  </ul>
+  <a href="#contact" class={`block text-center ${isPopular ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'} px-6 py-3 rounded-full hover:opacity-90 transition-colors`}>
+    いますぐ申し込む
+  </a>
+</div>

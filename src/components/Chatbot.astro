@@ -1,0 +1,130 @@
+---
+---
+
+<div id="chatbot" class="fixed bottom-4 right-4 z-50">
+  <!-- チャットボットトリガーボタン -->
+  <button
+    id="chatTrigger"
+    class="bg-blue-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition-colors"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>
+  </button>
+
+  <!-- チャットウィンドウ -->
+  <div
+    id="chatWindow"
+    class="hidden absolute bottom-16 right-0 w-96 bg-white rounded-lg shadow-xl border border-gray-200"
+  >
+    <!-- チャットヘッダー -->
+    <div class="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+      <h3 class="font-bold">カスタマーサポート</h3>
+      <button id="closeChat" class="text-white hover:text-gray-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- チャットメッセージエリア -->
+    <div id="chatMessages" class="p-4 h-96 overflow-y-auto space-y-4"></div>
+
+    <!-- 入力エリア -->
+    <div class="border-t p-4">
+      <div class="flex space-x-2">
+        <input
+          type="text"
+          id="messageInput"
+          class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:border-blue-600"
+          placeholder="メッセージを入力..."
+        />
+        <button
+          id="sendMessage"
+          class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors"
+        >
+          送信
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const chatResponses = {
+    '料金': '現在、スタンダードプラン（98,000円）とプレミアムプラン（198,000円）をご用意しています。詳細は料金プランセクションをご確認ください。',
+    '支払い': '分割払いにも対応しています。クレジットカード、銀行振込がご利用いただけます。',
+    '期間': '基本的なスキルの習得には約1-2ヶ月程度かかります。その後は実践を通じてスキルアップしていきます。',
+    '実績': '多くの受講生が3ヶ月以内に月5万円以上の収益を上げています。詳しい実績は実績セクションをご覧ください。',
+    'サポート': '専門のサポートスタッフが、メールやチャットで丁寧にサポートいたします。プレミアムプランではマンツーマンコンサルティングも提供しています。',
+    'default': 'ご質問ありがとうございます。より詳しい情報が必要な場合は、無料説明会にお申し込みください。専門のスタッフが丁寧にご説明させていただきます。'
+  };
+
+  let isInitialMessage = true;
+
+  function addMessage(message: string, isUser: boolean) {
+    const messagesDiv = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+    
+    const messageContent = document.createElement('div');
+    messageContent.className = `max-w-[80%] p-3 rounded-lg ${
+      isUser ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'
+    }`;
+    messageContent.textContent = message;
+    
+    messageDiv.appendChild(messageContent);
+    messagesDiv?.appendChild(messageDiv);
+    messagesDiv?.scrollTo(0, messagesDiv.scrollHeight);
+  }
+
+  function getResponse(message: string) {
+    const lowercaseMessage = message.toLowerCase();
+    for (const [key, response] of Object.entries(chatResponses)) {
+      if (lowercaseMessage.includes(key.toLowerCase())) {
+        return response;
+      }
+    }
+    return chatResponses.default;
+  }
+
+  // イベントリスナーの設定
+  document.addEventListener('DOMContentLoaded', () => {
+    const chatTrigger = document.getElementById('chatTrigger');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChat = document.getElementById('closeChat');
+    const messageInput = document.getElementById('messageInput') as HTMLInputElement;
+    const sendMessage = document.getElementById('sendMessage');
+
+    chatTrigger?.addEventListener('click', () => {
+      chatWindow?.classList.toggle('hidden');
+      if (isInitialMessage) {
+        addMessage('こんにちは！海外転売ビジネスについて、ご質問がございましたらお気軽にお尋ねください。', false);
+        isInitialMessage = false;
+      }
+    });
+
+    closeChat?.addEventListener('click', () => {
+      chatWindow?.classList.add('hidden');
+    });
+
+    function handleSendMessage() {
+      const message = messageInput?.value.trim();
+      if (message) {
+        addMessage(message, true);
+        setTimeout(() => {
+          addMessage(getResponse(message), false);
+        }, 500);
+        messageInput.value = '';
+      }
+    }
+
+    sendMessage?.addEventListener('click', handleSendMessage);
+
+    messageInput?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        handleSendMessage();
+      }
+    });
+  });
+</script>
